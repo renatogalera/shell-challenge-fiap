@@ -110,7 +110,7 @@ function restoreWWW()
     if [ ! -z $DADOSAPACHE ];
     then
         ESCOLHA_DATA=$(whiptail --title "Restore Backup Dados WWW" --menu "Escolha data do backup" 20 78 10 `for x in $DADOSAPACHE/*.tar.gz; do echo "$x backup" | sed 's/.*apache-\(.*\).tar.gz/\1/'; done` 3>&1 1>&2 2>&3)
-        ESCOLHA_DATA=$(ls $DADOSAPACHE/apache-"$ESCOLHA_DATA".tar.gz | tail -n 1 > /dev/null 2>&1)
+        ESCOLHA_DATA=$(ls $DADOSAPACHE/apache-"$ESCOLHA_DATA".tar.gz | tail -n 1)
         restoreBackup
     else
         echo "Diretório de Backup não encontrado"
@@ -123,7 +123,7 @@ function restoreConf()
     if [ ! -z $CONFIGAPACHE ];
     then
         ESCOLHA_DATA=$(whiptail --title "Restore Backup Logs Apache" --menu "Escolha data do backup" 20 78 10 `for x in $CONFIGAPACHE/*.tar.gz; do echo "$x backup" | sed 's/.*apache-\(.*\).tar.gz/\1/'; done` 3>&1 1>&2 2>&3)
-        ESCOLHA_DATA=$(ls $CONFIGAPACHE/apache-"$ESCOLHA_DATA".tar.gz | tail -n 1 > /dev/null 2>&1)
+        ESCOLHA_DATA=$(ls $CONFIGAPACHE/apache-"$ESCOLHA_DATA".tar.gz | tail -n 1)
         restoreBackup
     else
         echo "Diretório de Backup não encontrado"
@@ -136,7 +136,7 @@ function restoreLogs()
     if [ ! -z $BACKUPLOGS ];
     then
         ESCOLHA_DATA=$(whiptail --title "Restore Backup Dados WWW" --menu "Escolha data do backup" 20 78 10 `for x in $BACKUPLOGS/*.tar.gz; do echo "$x backup" | sed 's/.*apache-\(.*\).tar.gz/\1/'; done` 3>&1 1>&2 2>&3)
-        ESCOLHA_DATA=$(ls $BACKUPLOGS/apache-"$ESCOLHA_DATA".tar.gz | tail -n 1 > /dev/null 2>&1)
+        ESCOLHA_DATA=$(ls $BACKUPLOGS/apache-"$ESCOLHA_DATA".tar.gz | tail -n 1)
         restoreBackup
     else
         echo "Diretório de Backup não encontrado"
@@ -247,7 +247,7 @@ function Main()
 #Argumentos de execução
 case "$1" in
     "-c")
-    FUNCAO"Adicionando ao Crontab"
+    FUNCAO="Adicionando ao Crontab"
     exec &> >(tee -a "$LOGS_CRONTAB")
     exec 2>&1 
     addCrontab
