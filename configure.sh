@@ -10,6 +10,7 @@ BACKUPDIR="/home/backup"
 CONFIGAPACHE=$BACKUPDIR/apache-config
 DADOSAPACHE=$BACKUPDIR/apache-dados
 BACKUPLOGS=$BACKUPDIR/apache-logs
+BACKUPAUTO=$BACKUPDIR/backupauto
 #Tratando o read
 QL=`echo $'\n.'`
 QL=${QL%.}
@@ -18,7 +19,17 @@ LOGS=$BACKUPDIR/script-logs
 LOGS_BACKUP=$LOGS/backup.txt
 LOGS_RESTORE=$LOGS/restore.txt
 LOGS_CRONTAB=$LOGS/crontab.txt 
+LOGS_AUTO=$LOGS/auto-backup.txt
 
+#Criar um backup diferenciado automático, usando a lista abaixo.
+AUTOBACKUP="
+    /var/log
+    /etc
+    /usr/lib
+    /var/spool
+    "
+
+#Função tratar erro
 function trataErro()
 {
     if [ $? = 0 ];
@@ -29,6 +40,7 @@ function trataErro()
     fi
 }
 
+#Função vars Centos
 function varsCentos()
 {
     OSVERSION="centos"
@@ -38,6 +50,7 @@ function varsCentos()
 
 }
 
+#Função vars Debian
 function varsDebian()
 {
     OSVERSION="debian"
@@ -46,6 +59,7 @@ function varsDebian()
     LOGS_APACHE="/var/log/apache2"
 }
 
+#Função restore backup
 function restoreBackup()
 {
     EXITSTATUS=$?
@@ -69,13 +83,14 @@ function comoUsa()
 {
     echo "Programa Backup Apache Conf/Data - Linux Fiap 2019"
     echo ""
-    echo "$(basename "$0") [-c] [-b] [-r]"
+    echo "$(basename "$0") [-c] [-b] [-r] [-v]"
     echo ""
     echo "Use:"
     echo -e "\t -c Adiciona tarefa no Crontab"
     echo -e "\t -b Executa o backup"
     echo -e "\t -r Executa o restore do backup"
     echo -e "\t -v Verifica diretórios de backups e logs"
+    echo -e "\t -a Executa backup dos diretórios listas em AUTOBACKUP"
 }
 
 #Função restore Backup
@@ -182,7 +197,8 @@ function checaFolders()
         $CONFIGAPACHE
         $DADOSAPACHE
         $LOGS
-        $BACKUPLOGS )
+        $BACKUPLOGS
+        $BACKUPAUTO )
     
     for f in "${FOLDERSOK[@]}";
     do
@@ -196,7 +212,8 @@ function checaFolders()
     FILESOK=(
         $LOGS_BACKUP
         $LOGS_RESTORE
-        $LOGS_CRONTAB )
+        $LOGS_CRONTAB
+        $LOGS_AUTO )
     for f in "${FILESOK[@]}";
     do
         if [ ! -e $f ];
@@ -235,13 +252,25 @@ function execBackup()
     trataErro
 }
 
+function autoBackup()
+{
+    echo "#################"
+    echo "## Iniciando Backup Automático $DATA"
+    echo "#################"
+    # for i in "${AUTOBACKUP[@]}"
+    # do
+    # /bin/tar -cvPpzf $BACKUPAUTO/auto-backup-$DATA.tar.gz $i 
+    # done
+    /bin/tar -cvPpzf $BACKUPAUTO/auto-backup-$DATA.tar.gz $AUTOBACKUP
+    trataErro
+}
+
 #Função principal
 function Main()
 {
     checaVersaoOS
     checaProgramas
     checaFolders
-    execBackup
 }
 
 #Argumentos de execução
@@ -257,6 +286,7 @@ case "$1" in
     exec &> >(tee -a "$LOGS_BACKUP")
     exec 2>&1
     Main
+    execBackup
     ;;
     "-r")
     FUNCAO="Restaurando o Backup"
@@ -267,6 +297,12 @@ case "$1" in
     "-v")
     echo "Diretório de backup: $BACKUPDIR"
     echo "Diretório de logs: $LOGS"
+    ;;
+    "-a")
+    exec &> >(tee -a "$LOGS_AUTO")
+    exec 2>&1
+    Main
+    autoBackup
     ;;
     *) 
     echo "Opção Inválida" >&2
