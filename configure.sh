@@ -82,7 +82,9 @@ function menuRestoreBackup()
     echo "   1) Restaurar backup das Configurações do Apache"
     echo "   2) Restaurar backup Sites do Apache"
     echo "   3) Restaurar backup dos Logs Apache"
-    echo "   4) Sair"
+    echo "   4) Restaurar backup de pastas listadas em AUTOBACKUP"
+    echo "   5) Voltar ao menu"
+    echo "   6) Sair"
     until [[ "$SELECT_RESTORE" =~ ^[1-4]$ ]]; do
         read -rp "Selecione uma opção [1-4]: " SELECT_RESTORE
     done
@@ -103,6 +105,14 @@ function menuRestoreBackup()
             restoreBackup
         ;;
         4)
+            TITULO="Restore Logs Apache"
+            RESTAURE=$BACKUPAUTO
+            restoreBackup1
+        ;;
+        5)
+            Main
+        ;;
+        6)
             echo "Saindo..."
             exit 1
         ;;
