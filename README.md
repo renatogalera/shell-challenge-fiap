@@ -22,7 +22,7 @@ $ cd shell-challenge-fiap
 $ sudo chmod u+x configure.sh
 
 $ sudo configure.sh
-```
+
 Programa Backup Apache Conf/Data - Linux Fiap 2019
 
 configure.sh [-c] [-b] [-r] [-v]
@@ -33,7 +33,6 @@ Use:
          -r Executa o restore do backup
          -v Verifica diretórios de backups e logs
          -a Executa backup dos diretórios listados em AUTOBACKUP
-```
 
 #Executar backup
 
