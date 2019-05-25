@@ -76,7 +76,7 @@ function comoUsa()
     echo -e "\t -a Executa backup dos diretórios listados em AUTOBACKUP"
 }
 
-#Função restore Backup
+#Função Menu restore Backup
 function menuRestoreBackup()
 {
     echo "   1) Restaurar backup das Configurações do Apache"
@@ -105,9 +105,9 @@ function menuRestoreBackup()
             restoreBackup
         ;;
         4)
-            TITULO="Restore Logs Apache"
+            TITULO="Restore Backup Auto"
             RESTAURE=$BACKUPAUTO
-            restoreBackup1
+            restoreBackup
         ;;
         5)
             Main
@@ -119,6 +119,7 @@ function menuRestoreBackup()
     esac
 }
 
+#Função Restore Backup
 function restoreBackup()
 {
     if [ ! -z $RESTAURE ];
