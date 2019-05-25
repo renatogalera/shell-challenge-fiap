@@ -23,14 +23,6 @@ LOGS_AUTO=$LOGS/auto-backup.txt
 TAR_BKP='/bin/tar -cvPpzf'
 TAR_REST='/bin/tar -xvPpzf'
 
-#Criar um backup diferenciado automático, usando a lista abaixo.
-AUTOBACKUP="
-    /var/log
-    /etc
-    /usr/lib
-    /var/spool
-    "
-
 #Função tratar erro
 function trataErro()
 {
@@ -283,8 +275,15 @@ case "$1" in
     echo "Diretório de logs: $LOGS"
     ;;
     "-a")
+    if [ -z backup.ini ]; then
+        echo "Arquivo backup.ini não encontrado"
+        exit 1
+    else
+        AUTOBACKUP="$(/bin/cat backup.ini)"
+    fi
     exec &> >(tee -a "$LOGS_AUTO")
     exec 2>&1
+    #Criar um backup diferenciado automático, usando a lista abaixo
     Main
     autoBackup
     ;;
