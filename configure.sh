@@ -71,6 +71,9 @@ function comoUsa()
 #Função Menu restore Backup
 function menuRestoreBackup()
 {
+    FUNCAO="Restaurando o Backup"
+    exec &> >(tee -a "$LOGS_RESTORE")
+    exec 2>&1
     echo "   1) Restaurar backup das Configurações do Apache"
     echo "   2) Restaurar backup Sites do Apache"
     echo "   3) Restaurar backup dos Logs Apache"
@@ -153,6 +156,9 @@ function checaVersaoOS()
 #Função add crontab
 function addCrontab()
 {
+    FUNCAO="Adicionando ao Crontab"
+    exec &> >(tee -a "$LOGS_CRONTAB")
+    exec 2>&1 
     read -rp "Digite Hora [0-23]: " SETHORA
     read -rp "Digite Minutos [0-59]: " SETMINUTO
     /bin/cp $(basename "$0") $BACKUPDIR
@@ -212,6 +218,9 @@ function checaProgramas()
 #Função executando backup
 function execBackup()
 {
+    FUNCAO="Executando Backup"
+    exec &> >(tee -a "$LOGS_BACKUP")
+    exec 2>&1
     echo "#################"
     echo "## Iniciando Backup $DATA" 
     echo "## Backup das configurações do Apache" 
@@ -230,6 +239,8 @@ function execBackup()
 
 function autoBackup()
 {
+    exec &> >(tee -a "$LOGS_AUTO")
+    exec 2>&1
     echo "#################"
     echo "## Iniciando Backup Automático $DATA"
     echo "#################"
@@ -248,27 +259,22 @@ function Main()
 #Argumentos de execução
 case "$1" in
     "-c")
-    FUNCAO="Adicionando ao Crontab"
-    exec &> >(tee -a "$LOGS_CRONTAB")
-    exec 2>&1 
+    Main
     addCrontab
     ;;
     "-b")
-    FUNCAO="Executando Backup"
-    exec &> >(tee -a "$LOGS_BACKUP")
-    exec 2>&1
     Main
     execBackup
     ;;
     "-r")
-    FUNCAO="Restaurando o Backup"
-    exec &> >(tee -a "$LOGS_RESTORE")
-    exec 2>&1
+    Main
     menuRestoreBackup
     ;;
     "-v")
     echo "Diretório de backup: $BACKUPDIR"
     echo "Diretório de logs: $LOGS"
+    echo "Diretórios em backup.ini abaixo"
+    echo "$(/bin/cat backup.ini)"
     ;;
     "-a")
     if [ -z backup.ini ]; then
@@ -277,9 +283,6 @@ case "$1" in
     else
         AUTOBACKUP="$(/bin/cat backup.ini)"
     fi
-    exec &> >(tee -a "$LOGS_AUTO")
-    exec 2>&1
-    #Criar um backup diferenciado automático, usando a lista abaixo
     Main
     autoBackup
     ;;
