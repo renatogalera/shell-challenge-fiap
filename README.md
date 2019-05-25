@@ -5,7 +5,7 @@
 
 # Iniciando
 
-Script de backup para os diretórios DocumentRoot e configurações do Apache.
+Script de backup multi folders e restore utilizando menu interativo.
 
 # Pré-requisitos
 
