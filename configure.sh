@@ -75,10 +75,9 @@ function menuRestoreBackup()
     echo "   2) Restaurar backup Sites do Apache"
     echo "   3) Restaurar backup dos Logs Apache"
     echo "   4) Restaurar backup de pastas listadas em AUTOBACKUP"
-    echo "   5) Voltar ao menu"
-    echo "   6) Sair"
-    until [[ "$SELECT_RESTORE" =~ ^[1-4]$ ]]; do
-        read -rp "Selecione uma opção [1-4]: " SELECT_RESTORE
+    echo "   5) Sair"
+    until [[ "$SELECT_RESTORE" =~ ^[1-5]$ ]]; do
+        read -rp "Selecione uma opção [1-5]: " SELECT_RESTORE
     done
     case $SELECT_RESTORE in
         1)
@@ -102,9 +101,6 @@ function menuRestoreBackup()
             restoreBackup
         ;;
         5)
-            Main
-        ;;
-        6)
             echo "Saindo..."
             exit 1
         ;;
@@ -116,8 +112,8 @@ function restoreBackup()
 {
     if [ ! -z $RESTAURE ];
     then
-        ESCOLHA_DATA=$(whiptail --title "$TITULO" --menu "Escolha data do backup" 20 78 10 `for x in $RESTAURE/*.tar.gz; do echo "$x Backup" | sed 's/.*apache-\(.*\).tar.gz/\1/'; done` 3>&1 1>&2 2>&3)
-        ESCOLHA_DATA=$(ls $RESTAURE/apache-"$ESCOLHA_DATA".tar.gz| tail -n 1)
+        ESCOLHA_DATA=$(whiptail --title "$TITULO" --menu "Escolha data do backup" 20 78 10 `for x in $RESTAURE/*.tar.gz; do echo "$x Backup" | sed 's/.*bk-\(.*\).tar.gz/\1/'; done` 3>&1 1>&2 2>&3)
+        ESCOLHA_DATA=$(ls $RESTAURE/*"$ESCOLHA_DATA"*| tail -n 1)
             if [[ -z $ESCOLHA_DATA ]];then
                 echo "Não foi encontrado arquivo de backup"
                 exit 1
@@ -220,15 +216,15 @@ function execBackup()
     echo "## Iniciando Backup $DATA" 
     echo "## Backup das configurações do Apache" 
     echo "#################"
-    $TAR_BKP $CONFIGAPACHE/apache-config-$DATA.tar.gz $APACHEDIR 
+    $TAR_BKP $CONFIGAPACHE/bk-apache-config-$DATA.tar.gz $APACHEDIR 
     echo "#################" 
     echo "## Backup dados dos sites Apache em $SITESAPACHE/apache-data-$DATA.tar.gz" 
     echo "#################"
-    $TAR_BKP $SITESAPACHE/apache-data-$DATA.tar.gz $APACHEDOCROOT 
+    $TAR_BKP $SITESAPACHE/bk-apache-data-$DATA.tar.gz $APACHEDOCROOT 
     echo "#################"
     echo "## Backup dos logs Apache em $BACKUPLOGS/apache-logs-$DATA.tar.gz"
     echo "#################"
-    $TAR_BKP $BACKUPLOGS/apache-logs-$DATA.tar.gz $LOGS_APACHE 
+    $TAR_BKP $BACKUPLOGS/bk-apache-logs-$DATA.tar.gz $LOGS_APACHE 
     trataErro
 }
 
@@ -237,7 +233,7 @@ function autoBackup()
     echo "#################"
     echo "## Iniciando Backup Automático $DATA"
     echo "#################"
-    $TAR_BKP $BACKUPAUTO/auto-backup-$DATA.tar.gz $AUTOBACKUP
+    $TAR_BKP $BACKUPAUTO/bk-auto-backup-$DATA.tar.gz $AUTOBACKUP
     trataErro
 }
 
