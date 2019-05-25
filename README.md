@@ -71,12 +71,6 @@ Menu interativo, você seleciona a data que deseja o restore
 
 -a Executa backup de uma lista de diretórios definidos no arquivo backup.ini. Arquivos devem estar listados por linha.
 
-Exemplo:
-/dir/1
-/dir/2
-/dir/3
-/dir/4
-
 # Backup interativo.
 
 O backup é feito das pastas /var/www, /var/log/{httpd,apache2} /etc/{httpd,apache2} e definidos pelo usuário alterando variável AUTOBACKUP.
