@@ -65,7 +65,7 @@ function comoUsa()
     echo -e "\t -b Executa o backup"
     echo -e "\t -r Executa o restore do backup"
     echo -e "\t -v Verifica diretórios de backups e logs"
-    echo -e "\t -a Executa backup dos diretórios listados em AUTOBACKUP"
+    echo -e "\t -a Executa backup dos diretórios contindos em backup.ini"
 }
 
 #Função Menu restore Backup
@@ -74,7 +74,7 @@ function menuRestoreBackup()
     echo "   1) Restaurar backup das Configurações do Apache"
     echo "   2) Restaurar backup Sites do Apache"
     echo "   3) Restaurar backup dos Logs Apache"
-    echo "   4) Restaurar backup de pastas listadas em AUTOBACKUP"
+    echo "   4) Restaurar backup de pastas contidas no backup.ini"
     echo "   5) Sair"
     until [[ "$SELECT_RESTORE" =~ ^[1-5]$ ]]; do
         read -rp "Selecione uma opção [1-5]: " SELECT_RESTORE
