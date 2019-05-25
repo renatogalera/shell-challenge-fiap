@@ -1,3 +1,4 @@
+
 # Shellscript Challenge Helder Fiap - NAC20
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/renatoguilhermini/aula-linux-fiap/commits/master) [![Fiap](https://img.shields.io/badge/Fiap-2018-ff0080.svg)](https://www.fiap.com.br/) [![Linkedin](https://img.shields.io/badge/linkedin-renatoguilhermini-yellowgreen.svg)](https://www.linkedin.com/in/renato-tadeu-galera-guilhermini-31b55614/)
@@ -9,17 +10,19 @@ Script de backup para os diretórios DocumentRoot e configurações do Apache.
 
 # Pré-requisitos
 
-Sistema Operacional Debian ou Redhat Enterprise Linux.
+Sistema Operacional Debian ou CentOS/Redhat Enterprise Linux.
 
 # Instalação
 
 ```
-git clone https://github.com/renatoguilhermini/shell-challenge-fiap
+$ git clone https://github.com/renatoguilhermini/shell-challenge-fiap
 
-cd shell-challenge-fiap
+$ cd shell-challenge-fiap
 
-chmod u+x configure.sh
+$ sudo chmod u+x configure.sh
 
+$ sudo configure.sh
+```
 Programa Backup Apache Conf/Data - Linux Fiap 2019
 
 configure.sh [-c] [-b] [-r] [-v]
@@ -32,10 +35,24 @@ Use:
          -a Executa backup dos diretórios listados em AUTOBACKUP
 ```
 
+#Executar backup
+
+$ sudo configure.sh -b
+
+#Adicionar crontab
+
+$ sudo configure.sh -c
+
+#Efetuar restore
+
+$ sudo configure.sh -r
+
+```
+
 # Parâmetros
 
 -c adiciona tarefa no crontab. 
-Menu interativo, você escolhe hora/minuto e usuário
+Menu interativo, você escolhe hora/minuto.
 
 -b Executa backup automaticamente
 
