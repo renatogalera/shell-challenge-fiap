@@ -73,7 +73,7 @@ Menu interativo, você seleciona a data que deseja o restore
 
 # Backup interativo.
 
-O backup é feito das pastas /var/www, /var/log/{httpd,apache2} /etc/{httpd,apache2} e definidos pelo usuário alterando variável AUTOBACKUP.
+O backup é feito das pastas /var/www, /var/log/{httpd,apache2} /etc/{httpd,apache2} e definidos pelo usuário no arquivo backup.ini.
 
 O modo de compactação é tar com gzip
 
