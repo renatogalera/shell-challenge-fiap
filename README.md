@@ -27,7 +27,7 @@ $ sudo configure.sh
 
 Programa Backup Apache Conf/Data - Linux Fiap 2019
 
-configure.sh [-c] [-b] [-r] [-v]
+configure.sh [-c] [-b] [-r] [-v] [-a]
 
 Use:
          -c Adiciona tarefa no Crontab
@@ -48,6 +48,14 @@ $ sudo configure.sh -c
 #Efetuar restore
 
 $ sudo configure.sh -r
+
+#Verificar diretório de backups e logs
+
+sudo configure.sh -r
+
+#Executa backup automático com base na variável AUTOBACKUP
+
+sudo configure.sh -r
 ```
 
 # Parâmetros
@@ -66,13 +74,16 @@ Menu interativo, você seleciona a data que deseja o restore
 
 # Backup interativo.
 
-O backup é feito das pastas /var/www, /var/log/{httpd,apache2} /etc/{httpd,apache2}
+O backup é feito das pastas /var/www, /var/log/{httpd,apache2} /etc/{httpd,apache2} e definidos pelo usuário alterando variável AUTOBACKUP.
+
 O modo de compactação é tar com gzip
-O backup é gerado com data e hora
+
+Backup gerado com data e hora
 
 # Restore
 
 É possível selecionar a data/hora do restore
+
 O restore é feito no diretório de origem
 
 # Crontab job
