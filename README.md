@@ -3,7 +3,6 @@
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/renatoguilhermini/aula-linux-fiap/commits/master) [![Fiap](https://img.shields.io/badge/Fiap-2018-ff0080.svg)](https://www.fiap.com.br/) [![Linkedin](https://img.shields.io/badge/linkedin-renatoguilhermini-yellowgreen.svg)](https://www.linkedin.com/in/renato-tadeu-galera-guilhermini-31b55614/)
 
-
 # Iniciando
 
 Script de backup para os diretórios DocumentRoot e configurações do Apache.
@@ -34,7 +33,7 @@ Use:
          -b Executa o backup
          -r Executa o restore do backup
          -v Verifica diretórios de backups e logs
-         -a Executa backup dos diretórios listados em AUTOBACKUP
+         -a Executa backup dos diretórios configurados em backup.ini
 ```
 ```
 #Executar backup
@@ -53,7 +52,7 @@ $ sudo configure.sh -r
 
 sudo configure.sh -r
 
-#Executa backup automático com base na variável AUTOBACKUP
+#Executa backup automático das pastas contidas em backup.ini
 
 sudo configure.sh -r
 ```
@@ -70,7 +69,13 @@ Menu interativo, você seleciona a data que deseja o restore
 
 -v Exibe diretórios de Backup e Logs.
 
--a Executa backup de uma lista de diretórios definidos pela variável AUTOBACKUP
+-a Executa backup de uma lista de diretórios definidos no arquivo backup.ini. Arquivos devem estar listados por linha.
+
+Exemplo:
+/dir/1
+/dir/2
+/dir/3
+/dir/4
 
 # Backup interativo.
 
