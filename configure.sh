@@ -161,6 +161,7 @@ function addCrontab()
     exec 2>&1 
     read -rp "Digite Hora [0-23]: " SETHORA
     read -rp "Digite Minutos [0-59]: " SETMINUTO
+    read -rp "Digite Usuário:  " SETUSER
     /bin/cp $(basename "$0") $BACKUPDIR
     /bin/chown $SETUSER $BACKUPDIR/$(basename "$0")
     /bin/chmod 700 $BACKUPDIR/$(basename "$0")
